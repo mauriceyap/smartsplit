@@ -54,13 +54,49 @@ public class UtilsTests {
     inputDebtList.add(new Debt(0, 1, -1f));
     inputDebtList.add(new Debt(0, 2, 4f));
     inputDebtList.add(new Debt(1, 0, -2f));
-    inputDebtList.add(new Debt(2, 0, -6f));
+    inputDebtList.add(new Debt(2, 0, 4f));
     inputDebtList.add(new Debt(2, 1, -6f));
     List <Debt> outputDebtList
         = CalculatorUtils.consolidateDebts(inputDebtList);
-    assertThat(outputDebtList.size(), is(3));
+    assertThat(outputDebtList.size(), is(2));
     assertTrue(outputDebtList.contains(new Debt(0, 1, 1f)));
-    assertTrue(outputDebtList.contains(new Debt(0, 2, 10f)));
     assertTrue(outputDebtList.contains(new Debt(1, 2, 6f)));
+  }
+
+  @Test
+  public void makeAllPositiveTests() {
+    List<Debt> inputDebtList = new ArrayList<>(3);
+    inputDebtList.add(new Debt(1, 2, -3f));
+    inputDebtList.add(new Debt(0, 1, 30f));
+    inputDebtList.add(new Debt(0, 2, -300f));
+    List<Debt> outputDebtList = CalculatorUtils.makeAllPositive(inputDebtList);
+    assertThat(outputDebtList.size(), is(3));
+    assertTrue(outputDebtList.contains(new Debt(2, 1, 3f)));
+    assertTrue(outputDebtList.contains(new Debt(0, 1, 30f)));
+    assertTrue(outputDebtList.contains(new Debt(2, 0, 300f)));
+  }
+
+  @Test
+  public void removeAllZeroDebtsStartingZero() {
+    List<Debt> inputDebtList = new ArrayList<>(3);
+    inputDebtList.add(new Debt(1, 2, 0f));
+    inputDebtList.add(new Debt(0, 1, 0f));
+    inputDebtList.add(new Debt(0, 2, 40f));
+    CalculatorUtils.removeAllZeroDebts(inputDebtList);
+    assertTrue(inputDebtList.size() == 1);
+    assertTrue(inputDebtList.contains(new Debt(0, 2, 40f)));
+  }
+
+  @Test
+  public void removeAllZeroDebtsEndingZero() {
+    List<Debt> inputDebtList = new ArrayList<>(4);
+    inputDebtList.add(new Debt(1, 2, 1f));
+    inputDebtList.add(new Debt(0, 1, 0f));
+    inputDebtList.add(new Debt(0, 2, 40f));
+    inputDebtList.add(new Debt(0, 3, 0f));
+    CalculatorUtils.removeAllZeroDebts(inputDebtList);
+    assertTrue(inputDebtList.size() == 2);
+    assertTrue(inputDebtList.contains(new Debt(1, 2, 1f)));
+    assertTrue(inputDebtList.contains(new Debt(0, 2, 40f)));
   }
 }

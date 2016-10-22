@@ -5,6 +5,12 @@ import java.util.Collections;
 import java.util.List;
 
 public class CalculatorUtils {
+  /**
+   * Consolidate Debts into a list consisting of no more than one Debt for
+   * each pair of people, where all debts are non-zero and positive
+   * @param debtList the list of Debts to process
+   * @return the list of consolidated Debts
+   */
   static List<Debt> consolidateDebts(List<Debt> debtList) {
     List<Debt> returnDebtList = new ArrayList<>();
 
@@ -31,13 +37,28 @@ public class CalculatorUtils {
       }
     }
     returnDebtList = makeAllPositive(returnDebtList);
+    removeAllZeroDebts(returnDebtList);
     return returnDebtList;
+  }
+
+  /**
+   * Removes all the Debts in a list with an amount of zero
+   * @param debtList The list of Debts which may contain Debts with a zero
+   *                 amount
+   */
+  static void removeAllZeroDebts(List<Debt> debtList) {
+    for (int i = 0; i < debtList.size(); i++) {
+      if (debtList.get(i).getAmount() == 0) {
+        debtList.remove(i);
+        i--;
+      }
+    }
   }
 
   /**
    * Gives all Debt objects a positive value by switching the debtor and
    * creditor in the case of a negative value
-   * @param debtList the list of Debt objects
+   * @param debtList the list of Debts
    */
   static List<Debt> makeAllPositive(List<Debt> debtList) {
     for (Debt debt : debtList) {
@@ -55,12 +76,5 @@ public class CalculatorUtils {
   static void orderDebtsDescending(List<Debt> debtList) {
     Collections.sort(debtList);
     Collections.reverse(debtList);
-  }
-
-  static void swapArrayElements(Object[] array, int elemOne,
-                                        int elemTwo) {
-    Object temp = array[elemOne];
-    array[elemOne] = array[elemTwo];
-    array[elemTwo]= temp;
   }
 }
