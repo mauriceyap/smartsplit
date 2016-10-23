@@ -16,16 +16,8 @@ public class Payment {
     return payer;
   }
 
-  void setPayer(int payer) {
-    this.payer = payer;
-  }
-
   int getPayee() {
     return payee;
-  }
-
-  void setPayee(int payee) {
-    this.payee = payee;
   }
 
   float getAmount() {

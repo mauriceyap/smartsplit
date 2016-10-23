@@ -23,10 +23,6 @@ public class Debt implements Comparable {
     return amount;
   }
 
-  void setAmount(float amount) {
-    this.amount = amount;
-  }
-
   void addAmount(float amount) {
     this.amount += amount;
   }
@@ -62,6 +58,8 @@ public class Debt implements Comparable {
     return compareDebt.getAmount() > amount ? -1 : 1;
   }
 
+  // Treat Debt objects as equal if they have identical creditors, debtors and
+  // amounts
   @Override
   public boolean equals(Object otherObject) {
     if (otherObject instanceof Debt) {

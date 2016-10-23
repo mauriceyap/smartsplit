@@ -13,7 +13,7 @@ public class UtilsTests {
   public void consolidateDebtsSingleton() {
     List<Debt> inputDebtList = new ArrayList<>(1);
     inputDebtList.add(new Debt(2, 1, 20.0f));
-    List <Debt> outputDebtList
+    List<Debt> outputDebtList
         = CalculatorUtils.consolidateDebts(inputDebtList);
     assertThat(outputDebtList.size(), is(1));
     assertTrue(outputDebtList.contains(new Debt(2, 1, 20.0f)));
@@ -26,7 +26,7 @@ public class UtilsTests {
     inputDebtList.add(new Debt(0, 1, 2.1f));
     inputDebtList.add(new Debt(1, 0, 42f));
     inputDebtList.add(new Debt(0, 1, 69f));
-    List <Debt> outputDebtList
+    List<Debt> outputDebtList
         = CalculatorUtils.consolidateDebts(inputDebtList);
     assertThat(outputDebtList.size(), is(1));
     assertTrue(outputDebtList.contains(new Debt(0, 1, 33.1f)));
@@ -39,7 +39,7 @@ public class UtilsTests {
     inputDebtList.add(new Debt(0, 2, 4f));
     inputDebtList.add(new Debt(1, 3, 2f));
     inputDebtList.add(new Debt(2, 1, -6f));
-    List <Debt> outputDebtList
+    List<Debt> outputDebtList
         = CalculatorUtils.consolidateDebts(inputDebtList);
     assertThat(outputDebtList.size(), is(4));
     assertTrue(outputDebtList.contains(new Debt(0, 1, 1f)));
@@ -56,7 +56,7 @@ public class UtilsTests {
     inputDebtList.add(new Debt(1, 0, -2f));
     inputDebtList.add(new Debt(2, 0, 4f));
     inputDebtList.add(new Debt(2, 1, -6f));
-    List <Debt> outputDebtList
+    List<Debt> outputDebtList
         = CalculatorUtils.consolidateDebts(inputDebtList);
     assertThat(outputDebtList.size(), is(2));
     assertTrue(outputDebtList.contains(new Debt(0, 1, 1f)));
@@ -98,5 +98,59 @@ public class UtilsTests {
     assertTrue(inputDebtList.size() == 2);
     assertTrue(inputDebtList.contains(new Debt(1, 2, 1f)));
     assertTrue(inputDebtList.contains(new Debt(0, 2, 40f)));
+  }
+
+  @Test
+  public void largestDebtFromFirstTest() {
+    List<Debt> inputDebtList = new ArrayList<>(3);
+    inputDebtList.add(new Debt(0, 1, 3f));
+    inputDebtList.add(new Debt(0, 2, 2f));
+    inputDebtList.add(new Debt(1, 2, 1f));
+    Debt expectedDebt = CalculatorUtils.largestDebtFrom(inputDebtList);
+    assertThat(expectedDebt, is(new Debt(0, 1, 3f)));
+  }
+
+  @Test
+  public void largestDebtFromMiddleTest() {
+    List<Debt> inputDebtList = new ArrayList<>(3);
+    inputDebtList.add(new Debt(0, 1, 1.5f));
+    inputDebtList.add(new Debt(0, 2, 3f));
+    inputDebtList.add(new Debt(1, 2, 1f));
+    Debt expectedDebt = CalculatorUtils.largestDebtFrom(inputDebtList);
+    assertThat(expectedDebt, is(new Debt(0, 2, 3f)));
+  }
+
+  @Test
+  public void largestDebtFromLastTest() {
+    List<Debt> inputDebtList = new ArrayList<>(3);
+    inputDebtList.add(new Debt(0, 1, 3f));
+    inputDebtList.add(new Debt(0, 2, 2f));
+    inputDebtList.add(new Debt(1, 2, 4f));
+    Debt expectedDebt = CalculatorUtils.largestDebtFrom(inputDebtList);
+    assertThat(expectedDebt, is(new Debt(1, 2, 4f)));
+  }
+
+  @Test
+  public void extractDebtsToCreditorFromListTest() {
+    List<Debt> originalDebtList = new ArrayList<>(5);
+    originalDebtList.add(new Debt(0, 1, 22f));
+    originalDebtList.add(new Debt(1, 4, 1f));
+    originalDebtList.add(new Debt(3, 1, 2f));
+    originalDebtList.add(new Debt(2, 1, 32f));
+    originalDebtList.add(new Debt(4, 1, 9f));
+    List<Debt> extractedDebtsOne
+        = CalculatorUtils.extractDebtsToCreditorFromList(originalDebtList, 1);
+    assertThat(originalDebtList.size(), is(1));
+    assertTrue(originalDebtList.contains(new Debt(1, 4, 1f)));
+    assertThat(extractedDebtsOne.size(), is(4));
+    assertTrue(extractedDebtsOne.contains(new Debt(0, 1, 22f)));
+    assertTrue(extractedDebtsOne.contains(new Debt(2, 1, 32f)));
+    assertTrue(extractedDebtsOne.contains(new Debt(3, 1, 2f)));
+    assertTrue(extractedDebtsOne.contains(new Debt(4, 1, 9f)));
+    List<Debt> extractedDebtsFour
+        = CalculatorUtils.extractDebtsToCreditorFromList(originalDebtList, 4);
+    assertThat(originalDebtList.size(), is(0));
+    assertThat(extractedDebtsFour.size(), is(1));
+    assertTrue(extractedDebtsFour.contains(new Debt(1, 4, 1f)));
   }
 }

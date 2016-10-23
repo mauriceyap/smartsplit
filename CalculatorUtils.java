@@ -1,13 +1,54 @@
 package SmartSplit;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class CalculatorUtils {
+
+  /**
+   * Finds all the Debts in a given list to a particular creditor, collates them
+   * into a list which is returned, and removes these from the given list
+   *
+   * @param debtList the list of Debts from which Debts should be extracted
+   * @param creditor the creditor of the Debts which should be extracted
+   * @return the list of extracted Debts
+   */
+  static List<Debt> extractDebtsToCreditorFromList(List<Debt> debtList, int creditor) {
+    List<Debt> debtsToCreditor = new ArrayList<>();
+    Iterator<Debt> debtIterator = debtList.iterator();
+    while (debtIterator.hasNext()) {
+      Debt debt = debtIterator.next();
+      if (debt.getCreditor() == creditor) {
+        debtsToCreditor.add(debt);
+        debtIterator.remove();
+      }
+    }
+    return debtsToCreditor;
+  }
+
+  /**
+   * Finds the Debt with the largest amount in a list
+   *
+   * @param debtList the list of Debts
+   * @return the Debt in the list with the largest amount
+   */
+  static Debt largestDebtFrom(List<Debt> debtList) {
+    Iterator<Debt> debtIterator = debtList.iterator();
+    Debt largestDebt = debtIterator.next();
+    while (debtIterator.hasNext()) {
+      Debt thisDebt = debtIterator.next();
+      if (thisDebt.compareTo(largestDebt) == 1) {
+        largestDebt = thisDebt;
+      }
+    }
+    return largestDebt;
+  }
+
   /**
    * Consolidate Debts into a list consisting of no more than one Debt for
    * each pair of people, where all debts are non-zero and positive
+   *
    * @param debtList the list of Debts to process
    * @return the list of consolidated Debts
    */
@@ -18,7 +59,7 @@ public class CalculatorUtils {
     // two people. If one exits, add them together.
     for (Debt oldDebt : debtList) {
       boolean debtHasBeenProcessed = false;
-      for (Debt newDebt: returnDebtList) {
+      for (Debt newDebt : returnDebtList) {
         if (newDebt.getDebtor() == oldDebt.getDebtor()
             && newDebt.getCreditor() == oldDebt.getCreditor()) {
           newDebt.addAmount(oldDebt.getAmount());
@@ -43,6 +84,7 @@ public class CalculatorUtils {
 
   /**
    * Removes all the Debts in a list with an amount of zero
+   *
    * @param debtList The list of Debts which may contain Debts with a zero
    *                 amount
    */
@@ -58,6 +100,7 @@ public class CalculatorUtils {
   /**
    * Gives all Debt objects a positive value by switching the debtor and
    * creditor in the case of a negative value
+   *
    * @param debtList the list of Debts
    */
   static List<Debt> makeAllPositive(List<Debt> debtList) {
@@ -67,14 +110,5 @@ public class CalculatorUtils {
       }
     }
     return debtList;
-  }
-
-  /**
-   * Sorts a list of Debts by descending order according to value
-   * @param debtList the list of Debts to be sorted
-   */
-  static void orderDebtsDescending(List<Debt> debtList) {
-    Collections.sort(debtList);
-    Collections.reverse(debtList);
   }
 }
