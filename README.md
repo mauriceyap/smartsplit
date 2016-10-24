@@ -4,6 +4,14 @@ SmartSplit is a Java library which consolidates a list of debts between
 members of a group, and returns a minimal list of payments due, in order
 to satisfy the existing debts in the most efficient way possible.
 
+##Using this tool
+The `calculate()` method in `SmartSplitCalculator.java` generates the
+list of payments (`Payment` objects) to satisfy a given list of debts 
+(`Debt` objects).
+
+Information about the `Debt` and `Payment` objects can be found in their
+associated class files, `Debt.java` and `Payment.java` respectively.
+
 ##Tests
 Two test files, `CalculatorTests.java` and `UtilsTests.java` are 
 included. They have been used to test the main calculation method and 
