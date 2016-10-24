@@ -101,6 +101,36 @@ public class UtilsTests {
   }
 
   @Test
+  public void largestDebtFromFirstTest() {
+    List<Debt> inputDebtList = new ArrayList<>(3);
+    inputDebtList.add(new Debt(0, 1, 3f));
+    inputDebtList.add(new Debt(0, 2, 2f));
+    inputDebtList.add(new Debt(1, 2, 1f));
+    Debt expectedDebt = CalculatorUtils.largestDebtFrom(inputDebtList);
+    assertThat(expectedDebt, is(new Debt(0, 1, 3f)));
+  }
+
+  @Test
+  public void largestDebtFromMiddleTest() {
+    List<Debt> inputDebtList = new ArrayList<>(3);
+    inputDebtList.add(new Debt(0, 1, 1.5f));
+    inputDebtList.add(new Debt(0, 2, 3f));
+    inputDebtList.add(new Debt(1, 2, 1f));
+    Debt expectedDebt = CalculatorUtils.largestDebtFrom(inputDebtList);
+    assertThat(expectedDebt, is(new Debt(0, 2, 3f)));
+  }
+
+  @Test
+  public void largestDebtFromLastTest() {
+    List<Debt> inputDebtList = new ArrayList<>(3);
+    inputDebtList.add(new Debt(0, 1, 3f));
+    inputDebtList.add(new Debt(0, 2, 2f));
+    inputDebtList.add(new Debt(1, 2, 4f));
+    Debt expectedDebt = CalculatorUtils.largestDebtFrom(inputDebtList);
+    assertThat(expectedDebt, is(new Debt(1, 2, 4f)));
+  }
+
+  @Test
   public void extractDebtsToCreditorFromListTest() {
     List<Debt> originalDebtList = new ArrayList<>(5);
     originalDebtList.add(new Debt(0, 1, 22f));

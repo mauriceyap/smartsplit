@@ -28,6 +28,24 @@ public class CalculatorUtils {
   }
 
   /**
+   * Finds the Debt with the largest amount in a list
+   *
+   * @param debtList the list of Debts
+   * @return the Debt in the list with the largest amount
+   */
+  static Debt largestDebtFrom(List<Debt> debtList) {
+    Iterator<Debt> debtIterator = debtList.iterator();
+    Debt largestDebt = debtIterator.next();
+    while (debtIterator.hasNext()) {
+      Debt thisDebt = debtIterator.next();
+      if (thisDebt.compareTo(largestDebt) == 1) {
+        largestDebt = thisDebt;
+      }
+    }
+    return largestDebt;
+  }
+
+  /**
    * Consolidate Debts into a list consisting of no more than one Debt for
    * each pair of people, where all debts are non-zero and positive
    *
