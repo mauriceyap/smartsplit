@@ -28,11 +28,11 @@ public class CalculatorTests {
     List<Payment> paymentList = SmartSplitCalculator.calculate(debtList);
     assertThat(paymentList.size(), is(2));
     assertThat(paymentList.get(0).getPayer(), is(0));
-    assertThat(paymentList.get(0).getPayee(), is(2));
-    assertThat(paymentList.get(0).getAmount(), is(20f));
+    assertThat(paymentList.get(0).getPayee(), is(1));
+    assertThat(paymentList.get(0).getAmount(), is(10f));
     assertThat(paymentList.get(1).getPayer(), is(0));
-    assertThat(paymentList.get(1).getPayee(), is(1));
-    assertThat(paymentList.get(1).getAmount(), is(10f));
+    assertThat(paymentList.get(1).getPayee(), is(2));
+    assertThat(paymentList.get(1).getAmount(), is(20f));
   }
 
   @Test

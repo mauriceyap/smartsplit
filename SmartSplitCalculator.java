@@ -29,7 +29,7 @@ public class SmartSplitCalculator {
 
   private static Payment generatePaymentFromDebts(List<Debt> debtList) {
     // Find the largest existing Debt in the main list
-    Debt largestDebt = CalculatorUtils.largestDebtFrom(debtList);
+    Debt largestDebt = debtList.get(0);
     int payee = largestDebt.getCreditor();
     int payer = largestDebt.getDebtor();
 
@@ -40,7 +40,7 @@ public class SmartSplitCalculator {
 
     // Remove the payer's Debt to the payee
     float totalDebtToPayee = largestDebt.getAmount();
-    debtsToPayee.remove(largestDebt);
+    debtsToPayee.remove(0);
 
     // Re-add the Debts removed from the main list as new debts to the payer of
     // this Payment. Total up the amounts of all these debts so they can be
