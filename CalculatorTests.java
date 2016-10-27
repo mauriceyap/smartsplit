@@ -9,15 +9,20 @@ import java.util.List;
 import java.util.Random;
 
 public class CalculatorTests {
+  private void checkPayment(Payment payment, int expectedPayer,
+                            int expectedPayee, float expectedAmount) {
+    assertThat(payment.getPayer(), is(expectedPayer));
+    assertThat(payment.getPayee(), is(expectedPayee));
+    assertThat(payment.getAmount(), is(expectedAmount));
+  }
+
   @Test
   public void singletonDebtListTest() {
     List<Debt> debtList = new ArrayList<>(1);
     debtList.add(new Debt(3, 4, 43f));
     List<Payment> paymentList = SmartSplitCalculator.calculate(debtList);
     assertThat(paymentList.size(), is(1));
-    assertThat(paymentList.get(0).getPayer(), is(3));
-    assertThat(paymentList.get(0).getPayee(), is(4));
-    assertThat(paymentList.get(0).getAmount(), is(43f));
+    checkPayment(paymentList.get(0), 3, 4, 43f);
   }
 
   @Test
@@ -27,12 +32,8 @@ public class CalculatorTests {
     debtList.add(new Debt(0, 2, 20f));
     List<Payment> paymentList = SmartSplitCalculator.calculate(debtList);
     assertThat(paymentList.size(), is(2));
-    assertThat(paymentList.get(0).getPayer(), is(0));
-    assertThat(paymentList.get(0).getPayee(), is(2));
-    assertThat(paymentList.get(0).getAmount(), is(20f));
-    assertThat(paymentList.get(1).getPayer(), is(0));
-    assertThat(paymentList.get(1).getPayee(), is(1));
-    assertThat(paymentList.get(1).getAmount(), is(10f));
+    checkPayment(paymentList.get(0), 0, 2, 20f);
+    checkPayment(paymentList.get(1), 0, 1, 10f);
   }
 
   @Test
