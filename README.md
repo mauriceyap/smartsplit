@@ -1,10 +1,10 @@
-#SmartSplit
+# SmartSplit
 
 SmartSplit is a Java library which consolidates a list of debts between 
 members of a group, and returns a minimal list of payments due, in order
 to satisfy the existing debts in the most efficient way possible.
 
-##Using this tool
+## Using this tool
 The `calculate()` method in `SmartSplitCalculator.java` generates the
 list of payments (`Payment` objects) to satisfy a given list of debts 
 (`Debt` objects).
@@ -12,7 +12,7 @@ list of payments (`Payment` objects) to satisfy a given list of debts
 Information about the `Debt` and `Payment` objects can be found in their
 associated class files, `Debt.java` and `Payment.java` respectively.
 
-##The algorithm
+## The algorithm
 Repeat the following process until all debts have been eliminated:
 
 1. Normalise the list of debts by:
@@ -29,12 +29,12 @@ from the main list.
 of the payment.
 6. Generate a payment for this amount from D to C
 
-##Tests
+## Tests
 Two test files, `CalculatorTests.java` and `UtilsTests.java` are 
 included. They have been used to test the main calculation method and 
 all calculator utility methods using the *jUnit* testing framework.
 
-##Why on earth did I do this?
+## Why on earth did I do this?
 **tl;dr: I got annoyed at Microsoft Excel one evening and this 
 happened**
 
